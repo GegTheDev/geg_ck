@@ -1,14 +1,10 @@
 Config = {
 	Framework = "esx", -- "auto", "esx", "old-esx" or "qbcore"
 
-	EnableCheckIdentifiers = true, -- This will check if the user has any of these identifiers before performing CK.
-	CheckIdentifiers = {
-		"char1:2f0fe9b4d0e8e53d06031cadd9b791d08f36d727",
-	},
-
-	EnablePermissions = false, -- This will check if the user has an admin group before performing CK.
-	AdminGroups = {
+	-- Group or identifier, doesn't matter, our script picks up both.
+	Admins = {
 		"admin",
+		"char1:something"
 	},
 
 	CKCommand = "ck", -- Command for admins to CK a player.
@@ -33,4 +29,5 @@ Config = {
 		messageInvalidPlayerId = "You need to put a valid player ID",
 		messageNoPermissions = "You can't execute this command!"
 	}
+
 }
