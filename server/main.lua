@@ -54,12 +54,9 @@ MySQL.ready(function()
         end
 
         for _, v in pairs(Config.Admins) do
-            if v == identifier then
+            if v == identifier or v == group then
                 return true
             end
-			if v == group then
-				return true
-			end
         end
 
         return false
@@ -133,3 +130,4 @@ MySQL.ready(function()
     end, false)
 
 end)
+
