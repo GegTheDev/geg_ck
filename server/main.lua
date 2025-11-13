@@ -53,20 +53,13 @@ MySQL.ready(function()
             group = QBCore.Functions.GetPlayer(source).Functions.GetPermission()
         end
 
-        if Config.EnableCheckIdentifiers then
-            for _, v in pairs(Config.CheckIdentifiers) do
-                if v == identifier then
-                    return true
-                end
+        for _, v in pairs(Config.Admins) do
+            if v == identifier then
+                return true
             end
-        end
-
-        if Config.EnablePermissions then
-            for _, v in pairs(Config.AdminGroups) do
-                if group == v then
-                    return true
-                end
-            end
+			if v == group then
+				return true
+			end
         end
 
         return false
@@ -83,10 +76,12 @@ MySQL.ready(function()
             xPlayer = QBCore.Functions.GetPlayer(src)
             xPlayer.identifier = xPlayer.PlayerData.citizenid
         end
-
+				
         if not xPlayer then return end
-
-        if not CheckPermissions(src, xPlayer.identifier) then
+		
+		local identificador = xPlayer.identifier
+		
+        if not CheckPermissions(src, identificador) then
             TriggerClientEvent('chat:addMessage', src, {
                 color = Config.ChatMessageFormats.colors,
                 args = {Config.ChatMessageFormats.prefix, Config.ChatMessageFormats.messageNoPermissions}
@@ -113,6 +108,8 @@ MySQL.ready(function()
             if xTarget then xTarget.identifier = xTarget.PlayerData.citizenid end
         end
 
+		local identificadorTarget = xTarget.identifier
+		
         if not xTarget then
             TriggerClientEvent('chat:addMessage', src, {
                 color = Config.ChatMessageFormats.colors,
@@ -125,7 +122,7 @@ MySQL.ready(function()
 
         for k, v in pairs(Config.TablesToDelete) do
             MySQL.Async.execute('DELETE FROM ' .. k .. ' WHERE ' .. v .. ' = @identifier', {
-                ['@identifier'] = xTarget.identifier
+                ['@identifier'] = identificadorTarget
             })
         end
 
@@ -134,4 +131,5 @@ MySQL.ready(function()
             args = {Config.ChatMessageFormats.prefix, Config.ChatMessageFormats.messageSuccess}
         })
     end, false)
+
 end)
